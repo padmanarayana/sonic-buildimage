@@ -282,6 +282,7 @@ sudo LANG=C DEBIAN_FRONTEND=noninteractive chroot $FILESYSTEM_ROOT apt-get -y in
 sudo https_proxy=$https_proxy LANG=C chroot $FILESYSTEM_ROOT pip install azure-storage==0.36.0
 sudo https_proxy=$https_proxy LANG=C chroot $FILESYSTEM_ROOT pip install watchdog==0.10.2
 sudo https_proxy=$https_proxy LANG=C chroot $FILESYSTEM_ROOT pip install futures==3.3.0
+sudo https_proxy=$https_proxy LANG=C chroot $FILESYSTEM_ROOT pip install pyroute2==0.5.2
 
 {% if install_kubernetes == "y" %}
 # Copy kubelet service files
@@ -361,6 +362,11 @@ sudo LANG=C chroot $FILESYSTEM_ROOT systemctl enable process-reboot-cause.timer
 sudo cp $IMAGE_CONFIGS/process-reboot-cause/process-reboot-cause.service $FILESYSTEM_ROOT_USR_LIB_SYSTEMD_SYSTEM
 echo "process-reboot-cause.service" | sudo tee -a $GENERATED_SERVICE_FILE
 sudo cp $IMAGE_CONFIGS/process-reboot-cause/process-reboot-cause $FILESYSTEM_ROOT/usr/bin/
+
+# Copy port_index_mapper service files
+sudo cp $IMAGE_CONFIGS/port_index_mapper/port_index_mapper.service $FILESYSTEM_ROOT_USR_LIB_SYSTEMD_SYSTEM
+echo "port_index_mapper.service" | sudo tee -a $GENERATED_SERVICE_FILE
+sudo cp $IMAGE_CONFIGS/port_index_mapper/port_index_mapper.py $FILESYSTEM_ROOT/usr/bin/
 
 ## Install package without starting service
 ## ref: https://wiki.debian.org/chroot

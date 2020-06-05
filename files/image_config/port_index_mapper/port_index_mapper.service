@@ -1,0 +1,13 @@
+[Unit]
+Description=Mapper for port index to ifindex
+Requires=updategraph.service
+After=updategraph.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/port_index_mapper.py
+StandardOutput=null
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
